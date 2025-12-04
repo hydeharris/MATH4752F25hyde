@@ -1,11 +1,12 @@
 #' Title
 #'
-#' @param x
+#' @param x a quantitative vector
 #'
-#' @returns a
+#' @returns A list with components 'x'
 #' @export
 #'
-#' @examples b
+#' @examples
+#' myFirstFunction(1:10)
 myFirstFunction <- function(x) {
   y <- x^2
   plot(x-y)

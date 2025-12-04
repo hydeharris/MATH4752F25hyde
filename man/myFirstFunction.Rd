@@ -7,14 +7,14 @@
 myFirstFunction(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{a quantitative vector}
 }
 \value{
-a
+A list with components 'x'
 }
 \description{
 Title
 }
 \examples{
-b
+myFirstFunction(1:10)
 }

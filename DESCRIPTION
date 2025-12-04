@@ -1,6 +1,6 @@
 Package: MATH4753F25hyde
 Type: Package
-Title: Lab code 2025.
+Title: Lab code 2025
 Version: 0.1.0
 Authors@R: c(
     person(
@@ -10,7 +10,17 @@ Authors@R: c(
     )
   )
 Description: Lab code for Labs.
-License: What license is it under?
+License: CC0 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Depends: 
+    R (>= 3.5)
+Imports:
+  shiny

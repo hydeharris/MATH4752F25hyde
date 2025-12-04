@@ -1,0 +1,130 @@
+---
+title: "What this package does"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{What this package does}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MATH4753F25hyde)
+```
+
+# Overview
+
+Some of the core functions in this package are demonstrated here: tools for regression sums of squares, scatter plots with marginal histograms, overbooking decisions for flights, and visualizing normal tail areas. 
+
+# Total, Model, and Residual Sum of Squares: tssmssrss()
+
+## Description
+
+`tssmssrss()` computes the total, model, and residual sum of squares for a fitted quadratic model and reponse vector. 
+
+## Usage
+```
+tssmssrss(dataframe, quad.lm, col)
+```
+
+### Arguments
+`dataframe`  A data frame containing the observed data.  
+`quad.lm`    A fitted quadratic regression model of class `lm`.  
+`col`        A numeric response vector aligned with `quad.lm`.  
+
+### Value
+A numeric vector of length 3 containing `TSS`, `MSS`, and `RSS` in that order.
+
+
+### Example 
+
+```{r}
+quad.lm <- lm(DAMAGE ~ poly(DISTANCE, 2, raw = TRUE), data = fire)
+tssmssrss(fire, quad.lm, fire$DAMAGE)
+```
+
+# Scatter Plot with Marginal Histograms: scatterhist()
+
+## Description
+
+`scatterhist()` creates a scatter plot of two quantitative variables with marginal histograms for a quick look at joint and marginal behavior.
+
+## Usage
+```
+scatterhist(x, y, xlab = "", ylab = "")
+```
+
+### Arguments
+`x`     A numeric vector for the x-axis.  
+`y`     A numeric vector for the y-axis.  
+`xlab`  Character label for the x-axis.  
+`ylab`  Character label for the y-axis.  
+
+### Value
+A scatter plot of `x` versus `y` with histograms shown along the margins.
+
+### Example
+
+```{r}
+scatterhist(fire$DISTANCE, fire$DAMAGE,
+            xlab = "Distance", ylab = "Damage")
+```
+
+# Optimal Number of Tickets: ntickets()
+
+## Description
+
+`ntickets()` finds how many tickets to sell given an acceptable overbooking probability.
+
+## Usage
+```
+ntickets(N, gamma, p)
+```
+
+### Arguments
+`N`      Number of seats available on the flight.  
+`gamma`  Acceptable probability of overbooking (risk tolerance).  
+`p`      Probability that each individual ticket holder shows up.  
+
+### Value
+A named list containing the discrete solution `nd`, the continuous solution `nc`, and the inputs `N`, `p`, and `gamma`.
+
+### Example
+
+```{r}
+ntickets(400, gamma = 0.02, p = 0.95)
+```
+
+# Normal Curve Visualization: myncurve()
+
+## Description
+
+`myncurve()` shades the left tail of a normal curve and returns the probability $P(X \le a)$.
+
+## Usage
+```
+myncurve(mu, sigma, a)
+```
+
+### Arguments
+`mu`     Mean of the normal distribution.  
+`sigma`  Standard deviation of the normal distribution (positive).  
+`a`      Cutoff value defining the left-tail area.  
+
+### Value
+A named list containing `mu`, `sigma`, `a`, and `area`, where `area = P(X <= a)` under the specified normal distribution.
+
+### Example
+
+```{r}
+myncurve(mu = 25, sigma = 5, a = 20)
+```
+
+
+

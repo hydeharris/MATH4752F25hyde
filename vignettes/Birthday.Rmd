@@ -1,0 +1,91 @@
+---
+title: "Birthday"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Birthday}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MATH4753F25hyde)
+```
+
+## Derivation of the Birthday Problem Probability
+
+It is easier to find the probability of no shared birthdays.
+$$
+P(\bar{A}) = \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \cdot ... \cdot \frac{365-n+1}{365}
+$$
+Which is 
+$$
+P(\bar{A}) = \frac{365(364)(363)...(365-n+1)}{365^n} = \frac{{}^{365}P_n}{365^n}
+$$
+Then for sharing a birthday we subtract that probability from 1. 
+$$
+P(A)=1-P(\bar{A}) = 1- \frac{{}^{365}P_n}{365^n}
+$$
+
+
+## Reformulation of this Probability Using lfactorial and lchoose
+
+$$
+{}^{365}\!P_n = {}^{365}C_n \\
+P(\bar{A}) = \frac{{}^{365}\!P_n}{365^n} \\
+\log P(\bar{A}) = \log\!\left({}^{365}\!P_n\right) - n \log(365) \\
+= \log(n!) + \log (\text{choose}(365,n)) - n \log(365) \\
+= \text{lfactorial}(n) + \text{lchoose}(365,n) - n \log(365) \\
+P(A) = 1 - P(\bar{A}) = 1 - \exp\!\big(\log(P(\bar{A}))\big) \\
+= 1 - \exp(\text{lfactorial}(n) + \text{lchoose}(365,n) - n \log(365))
+$$
+
+## Birthday Function Body
+
+```{r, eval=FALSE}
+
+#' Birthday
+#'
+#' @param x the amount of people to check the probability of sharing a birthday
+#'
+#' @returns the probability that of x many people there is at least two people who share a birthday
+#' @export
+#'
+#' @examples
+#' birthday(20:24)
+birthday = function(x){
+  1 - exp(lchoose(365, x) + lfactorial(x) - x*log(365))
+}
+
+```
+
+### Description
+Calculates the chance that of n people at least two of them share a birthday.
+
+#### Usage
+```
+birthday(x)
+```
+
+#### Arguments
+`x`	The amount of people to check the probability of sharing a birthday
+
+#### Value
+The probability that of x many people there is at least two people who share a birthday
+
+
+
+
+## Example
+```{r}
+birthday(x = 20:25) 
+birthday(20:25)
+```
+
+
